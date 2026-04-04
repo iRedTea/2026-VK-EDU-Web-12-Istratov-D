@@ -1,14 +1,28 @@
-# 2026-VK-EDU-Web-12-Istratov-D
-VK Education
+## Добро пожаловать в мой репозиторий :)
 
-## Инструкция к запуску
-Индекс-файл (открыть в браузере): `/public/index.html`
+Позже здесь будет проект-дз...
 
-## HW-1:
-- создан репозиторий и подкаталоги внутри
-- создана базовая структура проекта (/public/*.html, /public/static/css/style.css, /public/static/js/script.js)
-- подключена библиотека bootstrap локально (/public/static/css/bootstrap.min.css) (пока не использовалась, подключена на будущее)
-- настроены права (protected main branch + merge только через PR — 1)
-- настроен .gitignore (за основу взят шаблон для python)
-- сверстаны
-- сверстаны base.html, index.html, question.html, ask.html, login.html, signup.html, profile.html
+### О себе
+
+Я интересуюсь **backend-разработкой**, **серверными инструментами** и **микроконтроллерами**.
+Пишу на Java, Python и C++, начинал с написания плагинов для Minecraft и разных полезных утилит.
+
+🔧 Студент VK Education, курса "Web-разработка".
+
+
+## Запуск проекта
+
+### На текущей машине
+
+```shell
+python manage.py runserver 8000
+pip install --no-cache-dir -r requirements.txt
+```
+
+### Docker
+
+```shell
+docker compose up --build
+```
+
+Запустится именно на 127.0.0.1:8000

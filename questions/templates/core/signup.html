@@ -1,0 +1,46 @@
+{% extends 'core/layout/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="main-title">
+    <h1>Create Account</h1>
+</div>
+
+<p class="error">Sorry, this email address already registered!</p>
+
+<form class="form">
+    <div class="form-row">
+        <label for="login">Login</label>
+        <input id="login" type="text" value="dr_pepper">
+    </div>
+    <div class="form-row">
+        <label for="email">Email</label>
+        <input id="email" type="email" value="drpepper@mail.ru">
+    </div>
+    <div class="form-row">
+        <label for="nickname">NickName</label>
+        <input id="nickname" type="text" value="Dr. Pepper">
+    </div>
+    <div class="form-row">
+        <label for="password">Password</label>
+        <input id="password" type="password" value="********">
+    </div>
+    <div class="form-row">
+        <label for="repeat">Repeat password</label>
+        <input id="repeat" type="password" value="********">
+    </div>
+    <div class="form-row">
+        <label>Upload avatar</label>
+        <input type="file">
+    </div>
+    <div>
+        <button class="button" type="button">Register!</button>
+    </div>
+</form>
+
+{% endblock %}
+
+
+
+

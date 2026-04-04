@@ -1,0 +1,35 @@
+{% extends 'core/layout/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="main-title">
+    <h1>Profile: Dr. Pepper</h1>
+</div>
+
+<form class="form">
+    <div class="form-row">
+        <label for="login">Login</label>
+        <input id="login" type="text" value="dr_pepper">
+    </div>
+    <div class="form-row">
+        <label for="email">Email</label>
+        <input id="email" type="email" value="drpepper@mail.ru">
+    </div>
+    <div class="form-row">
+        <label for="nickname">NickName</label>
+        <input id="nickname" type="text" value="Dr. Pepper">
+    </div>
+    <div class="form-row">
+        <label>Upload avatar</label>
+        <div class="avatar-box">avatar</div>
+    </div>
+    <div class="form-row">
+        <span></span>
+        <input type="file">
+    </div>
+    <div>
+        <button class="button" type="button">Save</button>
+    </div>
+</form>
+
+{% endblock %}
