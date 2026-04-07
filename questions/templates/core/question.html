@@ -1,0 +1,66 @@
+{% extends 'core/layout/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<article class="card">
+    <div>
+        <div class="avatar-box">avatar</div>
+        <div class="vote-box">
+            <span>5</span>
+            <span class="vote-arrows">^<span>'</span></span>
+        </div>
+    </div>
+    <div>
+        <div class="question-title">How to build a moon park ?</div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+        <div class="meta">
+            <span>Tags:</span>
+            <a class="tag" href="#">black-jack</a>
+            <a class="tag" href="#">bender</a>
+        </div>
+    </div>
+</article>
+
+<article class="answer-card">
+    <div>
+        <div class="avatar-box">avatar</div>
+        <div class="vote-box">
+            <span>5</span>
+            <span class="vote-arrows">^<span>'</span></span>
+        </div>
+    </div>
+    <div>
+        <p>First of all I would like to thank you for the invitation to participate in such a ... Russia is the huge territory which in many respects needs to be render habitable.</p>
+        <div class="answer-controls">
+            <input type="checkbox" checked>
+            <span>Correct!</span>
+        </div>
+    </div>
+</article>
+
+<article class="answer-card">
+    <div>
+        <div class="avatar-box">avatar</div>
+        <div class="vote-box">
+            <span>3</span>
+            <span class="vote-arrows">^<span>'</span></span>
+        </div>
+    </div>
+    <div>
+        <p>First of all I would like to thank you for the invitation to participate in such a ... Russia is the huge territory which in many respects needs to be render habitable.</p>
+        <div class="answer-controls">
+            <input type="checkbox">
+            <span>Correct!</span>
+        </div>
+    </div>
+</article>
+
+<form class="form">
+    <label for="answer">Enter your answer here..</label>
+    <textarea id="answer"></textarea>
+    <button class="button" type="button">Answer</button>
+</form>
+
+
+{% endblock %}

@@ -1,49 +1,35 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
-    <title>VkDesk | Ask a Question</title>
+    <title>VkDesk | Fresh Questions</title>
     <meta name="description" content="VkDesk Q&A">
-    <link rel="stylesheet" href="./static/css/style.css">
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
 </head>
 <body>
     <header class="site-header">
         <div class="logo">VkDesk</div>
         <form class="search">
             <input type="text" placeholder="Search">
-            <a class="button button--ask" href="index.html">ASK IT</a>
+            <a class="button button--ask" href="ask">ASK IT</a>
         </form>
-        <div class="user-auth">
-            <a href="login.html">Sign In</a>
-            <a href="signup.html">register</a>
+        <div class="user-block">
+            <div class="avatar-box small">avatar</div>
+            <div class="user-links">
+                <a href="profile" class="user-name">Dr. Pepper</a>
+                <div>
+                    <a href="profile">settings</a>
+                    <a href="login">log out</a>
+                </div>
+            </div>
         </div>
     </header>
-
     <div class="content">
         <main>
-            <div class="main-title">
-                <h1>Ask a Question</h1>
-            </div>
-
-            <form class="form">
-                <div class="form-row">
-                    <label for="title">Title</label>
-                    <input id="title" type="text" value="How to build a moon park ?">
-                </div>
-                <div class="form-row">
-                    <label for="text">Text</label>
-                    <textarea id="text">Really, how ? Have no idea about it</textarea>
-                </div>
-                <div class="form-row">
-                    <label for="tags">Tags</label>
-                    <input id="tags" type="text" value="moon, park, puzzle">
-                </div>
-                <div>
-                    <button class="button" type="button">ASK IT</button>
-                </div>
-            </form>
+            {% block content %}
+            {% endblock %}
         </main>
-
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h2>Trending Tags</h2>
@@ -72,7 +58,6 @@
         </aside>
     </div>
     <footer class="footer">2026</footer>
-</div>
 </body>
 </html>
 
