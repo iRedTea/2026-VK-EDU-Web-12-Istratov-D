@@ -3,16 +3,11 @@
 
 {% block content %}
 <div class="main-title">
-    <h1>All Questions</h1>
-    <a href="/hot">Hot questions</a>
+    <h1>Hot Questions</h1>
+    <a href="/">All questions</a>
 </div>
 
-{% if tag %}
-<div class="current-tag">
-    Текущий тег: <span>#{{ tag }}</span>
-</div>
-{% endif %}
-{% for question in questions %}
+{% for question in hot_questions %}
 {% include 'core/partials/question.html' %}
 {% endfor %}
 {% include 'core/partials/pagination.html' %}

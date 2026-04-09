@@ -9,7 +9,7 @@
 </head>
 <body>
     <header class="site-header">
-        <div class="logo">VkDesk</div>
+        <a href="/" class="logo not-underlined">VkDesk</a>
         <form class="search">
             <input type="text" placeholder="Search">
             <a class="button button--ask" href="ask">ASK IT</a>
@@ -34,14 +34,9 @@
             <div class="sidebar-section">
                 <h2>Trending Tags</h2>
                 <div class="tag-cloud">
-                    <span>perl</span>
-                    <span class="tag-red">python</span>
-                    <span>TechnoPark</span>
-                    <span class="tag-red">MySQL</span>
-                    <span class="tag-green">django</span>
-                    <span>Mail.Ru</span>
-                    <span>Voloshin</span>
-                    <span class="tag-orange">Firefox</span>
+                    {% for tag in tags %}
+                    <a href="/?tag={{ tag }}" class="not-underlined">{{tag}}</a>
+                    {% endfor %}
                 </div>
             </div>
 

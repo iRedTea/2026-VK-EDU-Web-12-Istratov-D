@@ -204,6 +204,10 @@ a:hover {
     box-shadow: 0.25rem 0.25rem 0 rgba(31, 45, 58, 0.08);
 }
 
+.not-underlined {
+  text-decoration: none;
+}
+
 .sidebar h2 {
     margin: 0 0 0.5rem;
     font-size: 1.25rem;
@@ -305,6 +309,21 @@ a:hover {
     align-items: center;
     gap: 0.4rem;
     margin-top: 0.4rem;
+}
+
+.current-tag {
+    display: inline-block;
+    border: 0.125rem solid #1f2d3a;
+    background: #f2f7f7;
+    padding: 0.25rem 0.6rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.85rem;
+    box-shadow: 0.2rem 0.2rem 0 rgba(31, 45, 58, 0.08);
+}
+
+.current-tag span {
+    color: #1d57d4;
+    font-weight: 700;
 }
 
 .footer {

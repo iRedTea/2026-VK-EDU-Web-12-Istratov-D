@@ -8,13 +8,14 @@
         </div>
     </div>
     <div>
-        <p class="question-title" href="question">{{ question.title }}</p>
+        <a class="question-title" href="question">{{ question.title }}</a>
         <p>{{ question.text }}</p>
         <div class="meta">
             <a href="question">answer (3)</a>
             <span>Tags:</span>
-            <a class="tag" href="#">black-jack</a>
-            <a class="tag" href="#">bender</a>
+            {% for tag in question.tags %}
+            <a class="tag" href="/?tag={{ tag }}">{{ tag }}</a>
+            {% endfor %}
         </div>
     </div>
 </article>
