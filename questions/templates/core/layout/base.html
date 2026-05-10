@@ -6,6 +6,7 @@
     <title>VkDesk | Fresh Questions</title>
     <meta name="description" content="VkDesk Q&A">
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <header class="site-header">
@@ -15,13 +16,27 @@
             <a class="button button--ask" href="ask">ASK IT</a>
         </form>
         <div class="user-block">
-            <div class="avatar-box small">avatar</div>
+            <div class="avatar-box small">
+                {% if request.user.profile.avatar %}
+                    <img src="{{ request.user.profile.avatar.url }}" width="40">
+                {% else %}
+                    <img src="{% static 'core/img/profile.webp' %}" width="40">
+                {% endif %}
+            </div>
             <div class="user-links">
-                <a href="profile" class="user-name">Dr. Pepper</a>
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="user-name">
+                    {{ request.user.profile.nickname }}
+                </a>
                 <div>
-                    <a href="profile">settings</a>
-                    <a href="login">log out</a>
+                    <a href="{% url 'logout' %}">log out</a>
                 </div>
+                {% else %}
+                <div>
+                    <a href="{% url 'login' %}">log in</a>
+                    <a href="{% url 'signup' %}">sign up</a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </header>
@@ -39,21 +54,11 @@
                     {% endfor %}
                 </div>
             </div>
-
-            <div class="sidebar-section">
-                <h2>Top Members</h2>
-                <div class="member-list">
-                    <a href="#">Mr. Freeman</a>
-                    <a href="#">Dr. House</a>
-                    <a href="#">Bender</a>
-                    <a href="#">Queen Victoria</a>
-                    <a href="#">V. Pupkin</a>
-                </div>
-            </div>
         </aside>
     </div>
     <footer class="footer">2026</footer>
 </body>
+<script src="{% static 'core/js/script.js' %}"></script>
 </html>
 
 

@@ -6,22 +6,29 @@
 <div class="main-title">
     <h1>Ask a Question</h1>
 </div>
+<form class="form" method="post">
+    {% csrf_token %}
 
-<form class="form">
+    {{ form.non_field_errors }}
+
     <div class="form-row">
-        <label for="title">Title</label>
-        <input id="title" type="text" value="How to build a moon park ?">
+        <label>Title</label>
+        {{ form.title }}
+        {{ form.title.errors }}
     </div>
+
     <div class="form-row">
-        <label for="text">Text</label>
-        <textarea id="text">Really, how ? Have no idea about it</textarea>
+        <label>Text</label>
+        {{ form.body }}
+        {{ form.body.errors }}
     </div>
+
     <div class="form-row">
-        <label for="tags">Tags</label>
-        <input id="tags" type="text" value="moon, park, puzzle">
+        <label>Tags</label>
+        {{ form.tags }}
+        {{ form.tags.errors }}
     </div>
-    <div>
-        <button class="button" type="button">ASK IT</button>
-    </div>
+
+    <button class="button" type="submit">ASK IT</button>
 </form>
 {% endblock %}

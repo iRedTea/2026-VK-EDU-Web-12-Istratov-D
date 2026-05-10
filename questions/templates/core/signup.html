@@ -7,38 +7,51 @@
     <h1>Create Account</h1>
 </div>
 
-<p class="error">Sorry, this email address already registered!</p>
+<form class="form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
 
-<form class="form">
+    {{ form.non_field_errors }}
+
     <div class="form-row">
-        <label for="login">Login</label>
-        <input id="login" type="text" value="dr_pepper">
+        <label>Login</label>
+        {{ form.username }}
+        {{ form.username.errors }}
     </div>
+
     <div class="form-row">
-        <label for="email">Email</label>
-        <input id="email" type="email" value="drpepper@mail.ru">
+        <label>Email</label>
+        {{ form.email }}
+        {{ form.email.errors }}
     </div>
+
     <div class="form-row">
-        <label for="nickname">NickName</label>
-        <input id="nickname" type="text" value="Dr. Pepper">
+        <label>NickName</label>
+        {{ form.nickname }}
+        {{ form.nickname.errors }}
     </div>
+
     <div class="form-row">
-        <label for="password">Password</label>
-        <input id="password" type="password" value="********">
+        <label>Password</label>
+        {{ form.password }}
+        {{ form.password.errors }}
     </div>
+
     <div class="form-row">
-        <label for="repeat">Repeat password</label>
-        <input id="repeat" type="password" value="********">
+        <label>Repeat password</label>
+        {{ form.password_repeat }}
+        {{ form.password_repeat.errors }}
     </div>
+
     <div class="form-row">
-        <label>Upload avatar</label>
-        <input type="file">
+        <label>Avatar</label>
+        {{ form.avatar }}
+        {{ form.avatar.errors }}
     </div>
+
     <div>
-        <button class="button" type="button">Register!</button>
+        <button class="button" type="submit">Register!</button>
     </div>
 </form>
-
 {% endblock %}
 
 
