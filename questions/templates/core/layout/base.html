@@ -12,10 +12,10 @@
 <body>
     <header class="site-header">
         <a href="/" class="logo not-underlined">VkDesk</a>
-        <form class="search">
+        <form class="search" onsubmit="return false;">
             <input id="search-input" type="text" placeholder="Search">
             <div id="search-suggestions" class="search-suggestions"></div>
-            <a class="button button--ask" href="ask">ASK IT</a>
+            <a class="button button--ask" href="#" onclick="redirectToAsk(event)">ASK IT</a>
         </form>
         <div class="user-block">
             <div class="avatar-box small">

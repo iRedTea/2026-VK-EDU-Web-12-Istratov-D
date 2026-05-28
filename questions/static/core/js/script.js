@@ -167,3 +167,27 @@ $(document).on('click', '.correct-answer-btn', function () {
         console.error('centrifuge init error', e);
     }
 })();
+// Handle ASK IT button - transfer search text to ask page
+function redirectToAsk(event) {
+    event.preventDefault();
+    const searchInput = document.getElementById('search-input');
+    const query = searchInput ? searchInput.value.trim() : '';
+    const url = query ? `/ask?q=${encodeURIComponent(query)}` : '/ask';
+    window.location.href = url;
+}
+
+// Populate title field from URL parameter on ask page
+function initializeTitleFromQuery() {
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get('q');
+    if (query) {
+        const titleField = document.querySelector('[name="title"]');
+        if (titleField) {
+            titleField.value = query;
+            titleField.focus();
+        }
+    }
+}
+
+// Run on ask page load
+document.addEventListener('DOMContentLoaded', initializeTitleFromQuery);
