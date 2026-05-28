@@ -1,0 +1,10 @@
+{
+  "secret": "centrifugo_secret",
+  "namespaces": [
+    {
+      "name": "public",
+      "anonymous": true
+    }
+  ],
+  "allowed_origins": ["*"]
+}

@@ -7,12 +7,14 @@
     <meta name="description" content="VkDesk Q&A">
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/centrifuge@2.2.1/centrifuge.min.js"></script>
 </head>
 <body>
     <header class="site-header">
         <a href="/" class="logo not-underlined">VkDesk</a>
         <form class="search">
-            <input type="text" placeholder="Search">
+            <input id="search-input" type="text" placeholder="Search">
+            <div id="search-suggestions" class="search-suggestions"></div>
             <a class="button button--ask" href="ask">ASK IT</a>
         </form>
         <div class="user-block">
@@ -49,10 +51,18 @@
             <div class="sidebar-section">
                 <h2>Trending Tags</h2>
                 <div class="tag-cloud">
-                    {% for tag in tags %}
-                    <a href="/?tag={{ tag }}" class="not-underlined">{{tag}}</a>
+                    {% for tag in popular_tags %}
+                    <a href="/?tag={{ tag.name }}" class="not-underlined">{{ tag.name }}</a>
                     {% endfor %}
                 </div>
+            </div>
+            <div class="sidebar-section">
+                <h2>Best Members</h2>
+                <ul class="best-members">
+                    {% for member in best_members %}
+                    <li>{{ member.username }} ({{ member.score }})</li>
+                    {% endfor %}
+                </ul>
             </div>
         </aside>
     </div>

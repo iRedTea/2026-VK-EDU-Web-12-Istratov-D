@@ -6,6 +6,7 @@ from django.utils.http import url_has_allowed_host_and_scheme
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 
 from .models import (
     Question,
@@ -22,6 +23,7 @@ from .forms import (
     AskForm,
     AnswerForm
 )
+from . import tasks as tasks_module
 
 
 def index(request):
@@ -104,6 +106,30 @@ def hot(request):
     })
 
 
+def search(request):
+    query_text = request.GET.get('q', '').strip()
+
+    if not query_text:
+        return JsonResponse({'results': []})
+
+    vector = SearchVector('title', 'body')
+    query = SearchQuery(query_text)
+    questions = Question.objects.annotate(
+        rank=SearchRank(vector, query)
+    ).filter(rank__gte=0.1).order_by('-rank')[:10]
+
+    results = [
+        {
+            'id': q.id,
+            'title': q.title,
+            'url': f'/question?question_id={q.id}'
+        }
+        for q in questions
+    ]
+
+    return JsonResponse({'results': results})
+
+
 def question(request):
 
     question_id = request.GET.get('question_id')
@@ -129,6 +155,36 @@ def question(request):
                 user=request.user,
                 question=question
             )
+
+            # trigger async notifications and cache updates
+            try:
+                payload = {
+                    'id': answer.id,
+                    'body': answer.body,
+                    'user': answer.user.username
+                }
+                tasks_module.publish_new_answer_centrifugo.delay(question.id, payload)
+            except Exception:
+                pass
+
+            try:
+                # send email to question author
+                recipient = []
+                if hasattr(question.user, 'profile'):
+                    recipient = [question.user.profile.email]
+                subject = f'New answer to your question: {question.title}'
+                message = f'User {answer.user.username} answered your question.\n\n{answer.body}'
+                if recipient and recipient[0]:
+                    tasks_module.send_new_answer_email.delay(subject, message, recipient)
+            except Exception:
+                pass
+
+            # optionally trigger cache rebuilds
+            try:
+                tasks_module.rebuild_popular_tags.delay()
+                tasks_module.rebuild_best_members.delay()
+            except Exception:
+                pass
 
             return redirect(
                 f'/question?question_id={question.id}#answer-{answer.id}'

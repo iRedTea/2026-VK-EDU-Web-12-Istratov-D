@@ -1,70 +1,122 @@
-version: '3.8'
-
 services:
-
   db:
-
     image: postgres:16
-
     container_name: postgres-container
-
     restart: always
-
     env_file:
       - .env
-
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
     networks:
       - django-network
-
-
 
   python-app:
-
     build: .
-
     container_name: django-app-container
-
     restart: always
-
-    ports:
-      - "8000:8000"
-
     working_dir: /app
-
     volumes:
       - .:/app
-      - media_data:/app/media
-
+      - ./media:/app/media
     env_file:
       - .env
-
     depends_on:
       - db
-
+      - redis
+      - maildev
     command: >
       sh -c "
-      python manage.py migrate &&
-      python manage.py runserver 0.0.0.0:8000
+      python manage.py migrate --noinput &&
+      python manage.py collectstatic --noinput &&
+      gunicorn application.wsgi:application --config gunicorn_conf.py
       "
-
     networks:
       - django-network
 
+  redis:
+    image: redis:7
+    container_name: redis-container
+    restart: always
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - django-network
 
+  celery:
+    build: .
+    container_name: celery-worker
+    command: celery -A application worker --loglevel=info
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - db
+    networks:
+      - django-network
+
+  celery-beat:
+    build: .
+    container_name: celery-beat
+    command: celery -A application beat --loglevel=info -S redbeat.RedBeatScheduler
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - db
+    networks:
+      - django-network
+
+  centrifugo:
+    image: centrifugo/centrifugo:latest
+    container_name: centrifugo
+    restart: always
+    command: centrifugo --config=/centrifugo/config.json
+    volumes:
+      - ./centrifugo:/centrifugo:ro
+    ports:
+      - "8001:8000"
+    networks:
+      - django-network
+
+  maildev:
+    image: maildev/maildev:latest
+    container_name: maildev
+    restart: always
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    networks:
+      - django-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-container
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./static:/var/www/ask_pupkin/static:ro
+      - ./media:/var/www/ask_pupkin/uploads:ro
+    depends_on:
+      - python-app
+    networks:
+      - django-network
 
 volumes:
+  redis_data:
   postgres_data:
   media_data:
-
-
 
 networks:
   django-network:

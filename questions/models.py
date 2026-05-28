@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.postgres.indexes import GinIndex
+from django.contrib.postgres.search import SearchVector
 
 import uuid
 import os
@@ -85,6 +87,11 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        indexes = [
+            GinIndex(SearchVector('title', 'body'), name='question_search_idx')
+        ]
+
 
 class QuestionReaction(models.Model):
 
@@ -130,6 +137,7 @@ class Answer(models.Model):
     body = models.TextField()
 
     rating = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
 

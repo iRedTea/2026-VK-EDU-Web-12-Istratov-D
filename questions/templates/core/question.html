@@ -188,3 +188,8 @@
 </form>
 
 {% endblock %}
+
+<script>
+    window.ASK_QUESTION_ID = {{ question.id }};
+    window.ANSWERS_COUNT = {{ answers|length }};
+</script>

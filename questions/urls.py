@@ -12,6 +12,7 @@ urlpatterns = [
     path('question', views.question, name='question'),
     path('signup', views.signup, name='signup'),
     path('hot', views.hot, name='hot'),
+    path('search', views.search, name='search'),
     path('logout', views.logout, name='logout'),
     path('ajax/question/react/', views.question_react),
     path('ajax/answer/react/', views.answer_react),
