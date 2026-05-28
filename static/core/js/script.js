@@ -55,6 +55,30 @@ if (searchInput) {
     });
 }
 
+function askItSearch(event) {
+    event.preventDefault();
+    const query = searchInput ? searchInput.value.trim() : '';
+    if (!query) {
+        return false;
+    }
+
+    fetch(`/search?q=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+            const results = data.results || [];
+            if (results.length) {
+                window.location.href = results[0].url;
+            } else {
+                window.location.href = `/ask?q=${encodeURIComponent(query)}`;
+            }
+        })
+        .catch(() => {
+            window.location.href = `/ask?q=${encodeURIComponent(query)}`;
+        });
+
+    return false;
+}
+
 function postReaction(url, data, onSuccess) {
     $.ajax({
         url,
@@ -167,31 +191,3 @@ $(document).on('click', '.correct-answer-btn', function () {
         console.error('centrifuge init error', e);
     }
 })();
-// Handle ASK IT button - transfer search text to ask page
-function redirectToAsk(event) {
-    event.preventDefault();
-    const searchInput = document.getElementById('search-input');
-    const query = searchInput ? searchInput.value.trim() : '';
-    const url = query ? `/ask?q=${encodeURIComponent(query)}` : '/ask';
-    window.location.href = url;
-}
-
-// Populate title field from URL parameter on ask page
-function initializeTitleFromQuery() {
-    const params = new URLSearchParams(window.location.search);
-    const query = params.get('q');
-    if (query) {
-        const titleField = document.querySelector('[name="title"]');
-        if (titleField) {
-            titleField.value = query;
-            titleField.focus();
-        }
-    }
-}
-
-// Run immediately (script.js loads at end of page, DOMContentLoaded may have already fired)
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeTitleFromQuery);
-} else {
-    initializeTitleFromQuery();
-}

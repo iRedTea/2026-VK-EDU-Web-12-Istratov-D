@@ -112,11 +112,14 @@ def search(request):
     if not query_text:
         return JsonResponse({'results': []})
 
-    vector = SearchVector('title', 'body')
-    query = SearchQuery(query_text)
+    vector = (
+        SearchVector('title', weight='A') +
+        SearchVector('body', weight='B')
+    )
+    query = SearchQuery(query_text, search_type='websearch')
     questions = Question.objects.annotate(
         rank=SearchRank(vector, query)
-    ).filter(rank__gte=0.1).order_by('-rank')[:10]
+    ).filter(rank__gt=0).order_by('-rank')[:10]
 
     results = [
         {
