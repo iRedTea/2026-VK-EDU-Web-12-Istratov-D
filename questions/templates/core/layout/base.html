@@ -8,6 +8,15 @@
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/centrifuge@2.2.1/centrifuge.min.js"></script>
+    <script>
+        function redirectToAsk(event) {
+            event.preventDefault();
+            const searchInput = document.getElementById('search-input');
+            const query = searchInput ? searchInput.value.trim() : '';
+            const url = query ? `/ask?q=${encodeURIComponent(query)}` : '/ask';
+            window.location.href = url;
+        }
+    </script>
 </head>
 <body>
     <header class="site-header">

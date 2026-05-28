@@ -189,5 +189,9 @@ function initializeTitleFromQuery() {
     }
 }
 
-// Run on ask page load
-document.addEventListener('DOMContentLoaded', initializeTitleFromQuery);
+// Run immediately (script.js loads at end of page, DOMContentLoaded may have already fired)
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeTitleFromQuery);
+} else {
+    initializeTitleFromQuery();
+}

@@ -27,6 +27,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG") == "True"
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+LOGIN_URL = '/login/'
 
 # Allow requests coming through nginx on host:8080 (used in local Docker Compose)
 # Add any additional origins you use (including scheme and port) here.
