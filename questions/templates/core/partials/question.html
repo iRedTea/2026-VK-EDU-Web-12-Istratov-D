@@ -1,20 +1,88 @@
-
 <article class="card">
+
     <div>
-        <div class="avatar-box">avatar</div>
+
+        <div class="avatar-box">
+
+            {% if question.user.profile.avatar %}
+                <img src="{{ question.user.profile.avatar.url }}" width="80">
+            {% else %}
+                avatar
+            {% endif %}
+
+        </div>
+
         <div class="vote-box">
-            <span>5</span>
-            <span class="vote-arrows">^</span>
+
+            <span
+                class="question-rating"
+                id="question-rating-{{ question.id }}"
+            >
+                {{ question.rating }}
+            </span>
+
+            {% if request.user.is_authenticated %}
+
+                {% if question.id not in user_reactions %}
+
+                    <button
+                        class="question-like"
+                        data-id="{{ question.id }}"
+                    >
+                        +
+                    </button>
+
+                    <button
+                        class="question-dislike"
+                        data-id="{{ question.id }}"
+                    >
+                        -
+                    </button>
+
+                {% else %}
+
+                    <span>voted</span>
+
+                {% endif %}
+
+            {% endif %}
+
         </div>
+
     </div>
+
     <div>
-        <p class="question-title" href="question">{{ question.title }}</p>
-        <p>{{ question.text }}</p>
+
+        <a
+            class="question-title"
+            href="/question?question_id={{ question.id }}"
+        >
+            {{ question.title }}
+        </a>
+
+        <p>{{ question.body }}</p>
+
         <div class="meta">
-            <a href="question">answer (3)</a>
+
+            <a href="/question?question_id={{ question.id }}">
+                answer
+            </a>
+
             <span>Tags:</span>
-            <a class="tag" href="#">black-jack</a>
-            <a class="tag" href="#">bender</a>
+
+            {% for tag in question.tags.all %}
+
+                <a
+                    class="tag"
+                    href="/?tag={{ tag }}"
+                >
+                    {{ tag }}
+                </a>
+
+            {% endfor %}
+
         </div>
+
     </div>
+
 </article>

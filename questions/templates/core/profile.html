@@ -3,33 +3,40 @@
 
 {% block content %}
 <div class="main-title">
-    <h1>Profile: Dr. Pepper</h1>
+    <h1>Profile:</h1>
 </div>
 
-<form class="form">
+<form class="form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+
     <div class="form-row">
-        <label for="login">Login</label>
-        <input id="login" type="text" value="dr_pepper">
+        <label>Email</label>
+        {{ form.email }}
+        {{ form.email.errors }}
     </div>
+
     <div class="form-row">
-        <label for="email">Email</label>
-        <input id="email" type="email" value="drpepper@mail.ru">
+        <label>Nickname</label>
+        {{ form.nickname }}
+        {{ form.nickname.errors }}
     </div>
+
     <div class="form-row">
-        <label for="nickname">NickName</label>
-        <input id="nickname" type="text" value="Dr. Pepper">
+        <label>Avatar</label>
+        {{ form.avatar }}
     </div>
-    <div class="form-row">
-        <label>Upload avatar</label>
-        <div class="avatar-box">avatar</div>
+
+    <div class="avatar-preview">
+        {% if request.user.profile.avatar %}
+            <img src="{{ request.user.profile.avatar.url }}" width="120">
+        {% else %}
+            <img src="{% static 'core/img/profile.webp' %}" width="120">
+        {% endif %}
     </div>
-    <div class="form-row">
-        <span></span>
-        <input type="file">
-    </div>
-    <div>
-        <button class="button" type="button">Save</button>
-    </div>
+
+    <button class="button" type="submit">Save</button>
 </form>
 
 {% endblock %}

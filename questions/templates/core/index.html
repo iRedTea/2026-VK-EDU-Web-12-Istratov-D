@@ -3,10 +3,15 @@
 
 {% block content %}
 <div class="main-title">
-    <h1>Fresh Questions</h1>
-    <a href="#">Top Today</a>
+    <h1>All Questions</h1>
+    <a href="/hot">Hot questions</a>
 </div>
 
+{% if tag %}
+<div class="current-tag">
+    Текущий тег: <span>#{{ tag }}</span>
+</div>
+{% endif %}
 {% for question in questions %}
 {% include 'core/partials/question.html' %}
 {% endfor %}

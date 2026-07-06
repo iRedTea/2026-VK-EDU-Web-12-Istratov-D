@@ -8,21 +8,31 @@
     <h1>Sign In</h1>
 </div>
 
-<p class="error">Sorry, wrong password!</p>
 
-<form class="form">
+<form class="form" method="post">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+
     <div class="form-row">
-        <label for="login">Login</label>
-        <input id="login" type="text" placeholder="Enter your login here">
+        <label>Login</label>
+        {{ form.username }}
+        {{ form.username.errors }}
     </div>
+
     <div class="form-row">
-        <label for="password">Password</label>
-        <input id="password" type="password" value="********">
+        <label>Password</label>
+        {{ form.password }}
+        {{ form.password.errors }}
     </div>
+
+    <input type="hidden" name="next" value="{{ next }}">
+
     <div>
-        <button class="button" type="button">Sign In!</button>
+        <button class="button" type="submit">Sign In!</button>
     </div>
-    <a href="signup">create new account</a>
+
+    <a href="{% url 'signup' %}">create new account</a>
 </form>
 
 

@@ -1,0 +1,16 @@
+{% extends 'core/layout/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="main-title">
+    <h1>Hot Questions</h1>
+    <a href="/">All questions</a>
+</div>
+
+{% for question in hot_questions %}
+{% include 'core/partials/question.html' %}
+{% endfor %}
+{% include 'core/partials/pagination.html' %}
+
+
+{% endblock %}
